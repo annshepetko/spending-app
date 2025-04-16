@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    username: postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/spending
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+
+secrets:
+  accessTokenExpiration: 10001230
+  refreshTokenExpiration: 1312312312312
+  jwtSecret: 357638792F423F4428472B4B6250655368566D597133743677397A2443264629
