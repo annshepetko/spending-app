@@ -15,16 +15,16 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class BasicCategory {
+public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "basic_category_id_seq")
-    @SequenceGenerator(name = "basic_category_id_seq", allocationSize = 1)
-    @Column(name = "basic_category_id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_id_seq")
+    @SequenceGenerator(name = "category_id_seq", allocationSize = 1)
+    @Column(name = "category_id", nullable = false)
     private Long id;
 
     private String name;
 
-    @ManyToMany(mappedBy = "basicCategories")
-    private List<User> user = new ArrayList<>();
+    @ManyToOne
+    private User user;
 
 }

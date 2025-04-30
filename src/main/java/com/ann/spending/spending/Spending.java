@@ -1,8 +1,7 @@
 package com.ann.spending.spending;
 
 import com.ann.spending.authorization.entity.User;
-import com.ann.spending.category.entity.BasicCategory;
-import com.ann.spending.category.entity.CustomCategory;
+import com.ann.spending.category.entity.Category;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,14 +22,9 @@ public class Spending {
     private Long id;
 
     @ManyToOne
-    private BasicCategory basicCategory;
-
-    @ManyToOne
-    private CustomCategory customCategory;
+    private Category category;
 
     @ManyToOne
     private User user;
-
-
 
 }
