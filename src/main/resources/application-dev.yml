@@ -8,10 +8,18 @@ spring:
     url: jdbc:postgresql://localhost:5432/spending
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    out-of-order: false
+    clean-disabled: true
+    mixed: false
 
 
 secrets:
-  accessTokenExpiration: 10001230
+  accessTokenExpiration: 10000
   refreshTokenExpiration: 1312312312312
   jwtSecret: 357638792F423F4428472B4B6250655368566D597133743677397A2443264629

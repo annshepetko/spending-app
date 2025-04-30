@@ -17,7 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class BasicCategory {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "basic_category_id_seq")
+    @SequenceGenerator(name = "basic_category_id_seq", allocationSize = 1)
     @Column(name = "basic_category_id", nullable = false)
     private Long id;
 

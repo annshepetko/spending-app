@@ -1,4 +1,13 @@
 package com.ann.spending.authorization.dto;
 
-public record AuthenticationResponse (String token) {
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public record AuthenticationResponse(
+        String accessToken,
+
+        @JsonIgnore
+        String refreshToken
+) {
 }
