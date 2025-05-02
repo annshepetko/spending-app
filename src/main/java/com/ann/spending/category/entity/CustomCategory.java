@@ -1,9 +1,13 @@
 package com.ann.spending.category.entity;
 
 import com.ann.spending.authorization.entity.User;
+import com.ann.spending.spending.Spending;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,4 +25,7 @@ public class CustomCategory {
 
     @ManyToOne
     private User user;
+
+    @OneToMany(mappedBy = "customCategory", cascade = {CascadeType.ALL})
+    private List<Spending> spending = new ArrayList<>();
 }

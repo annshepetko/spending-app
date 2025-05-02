@@ -10,6 +10,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+
 @Entity
 @Builder
 @Getter
@@ -31,6 +35,26 @@ public class Spending {
     @ManyToOne
     private User user;
 
+    private BigDecimal amount;
 
+    public void setAmount(BigDecimal amount) {
+        if (amount.longValue() < 0){
+            throw new RuntimeException("amount is less than 0");
+        }
+        this.amount = amount;
+    }
+
+    @Column(name = "spent_at", nullable = false)
+    private LocalDateTime date;
+
+    public void setBasicCategory(BasicCategory basicCategory) {
+        this.basicCategory = basicCategory;
+        basicCategory.getSpendings().add(this);
+    }
+
+    public void setCustomCategory(CustomCategory customCategory){
+        this.customCategory = customCategory;
+        customCategory.getSpending().add(this);
+    }
 
 }

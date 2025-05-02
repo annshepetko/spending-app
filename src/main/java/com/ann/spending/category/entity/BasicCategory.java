@@ -1,6 +1,7 @@
 package com.ann.spending.category.entity;
 
 import com.ann.spending.authorization.entity.User;
+import com.ann.spending.spending.Spending;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,5 +27,10 @@ public class BasicCategory {
 
     @ManyToMany(mappedBy = "basicCategories")
     private List<User> user = new ArrayList<>();
+
+    @OneToMany(mappedBy = "basicCategory", cascade = CascadeType.ALL)
+    private List<Spending> spendings = new ArrayList<>();
+
+
 
 }
