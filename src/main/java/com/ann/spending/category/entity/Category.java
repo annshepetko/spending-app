@@ -1,10 +1,9 @@
 package com.ann.spending.category.entity;
 
 import com.ann.spending.authorization.entity.User;
-import com.ann.spending.spending.Spending;
+import com.ann.spending.spending.entity.Spending;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,10 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class CustomCategory {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class Category {
 
     @Id
     @SequenceGenerator(name = "category_seq_gen", allocationSize = 1)
@@ -21,11 +23,18 @@ public class CustomCategory {
     private Long id;
 
 
+    public Category(Long id) {
+        this.id = id;
+    }
+
     private String name;
 
-    @ManyToOne
-    private User user;
+    @ManyToMany(mappedBy = "categories")
+    private List<User> users;
 
-    @OneToMany(mappedBy = "customCategory", cascade = {CascadeType.ALL})
+
+    private Integer index;
+
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL})
     private List<Spending> spending = new ArrayList<>();
 }

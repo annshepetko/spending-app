@@ -1,31 +1,53 @@
 package com.ann.spending.spending.service;
 
-import com.ann.spending.category.CategoryRepository;
-import com.ann.spending.category.CustomCategoryRepository;
+import com.ann.spending.category.entity.Category;
+import com.ann.spending.spending.dto.SpendingDTO;
+import com.ann.spending.spending.entity.Spending;
 import com.ann.spending.spending.SpendingRepository;
 import com.ann.spending.spending.dto.CreateSpendingBody;
+import com.ann.spending.spending.interfaces.SpendingDaoService;
+import com.ann.spending.spending.mapper.SpendingMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 public class SpendingService {
 
-    private final CategoryRepository categoryRepository;
-    private final CustomCategoryRepository customCategoryRepository;
-    private final SpendingRepository spendingRepository;
+    private final SpendingDaoService spendingDaoService;
+    private final SpendingMapper spendingMapper;
 
     public SpendingService(
-            CategoryRepository categoryRepository,
-            CustomCategoryRepository customCategoryRepository,
-            SpendingRepository spendingRepository
-    ) {
-        this.categoryRepository = categoryRepository;
-        this.customCategoryRepository = customCategoryRepository;
-        this.spendingRepository = spendingRepository;
+            SpendingDaoService spendingDaoService, SpendingMapper spendingMapper) {
+        this.spendingDaoService = spendingDaoService;
+        this.spendingMapper = spendingMapper;
     }
 
+    @Transactional
     public void createSpending(CreateSpendingBody createSpendingBody) {
 
-
-
+        Spending spending = spendingMapper.mapToSpending(createSpendingBody);
+        spendingDaoService.save(spending);
     }
+
+    @Transactional
+    public void deleteSpending(Long id){
+        spendingDaoService.deleteById(id);
+    }
+
+
+    @Transactional
+    public Spending update(SpendingDTO spendingDTO){
+
+        Spending spending = spendingDaoService.findById(spendingDTO.id());
+        spending.setAmount(spendingDTO.amount());
+        spending.setUpdatedAt(LocalDateTime.now());
+        spending.setDescription(spending.getDescription());
+        spending.setCategory(new Category(spendingDTO.categoryId()));
+
+        return spending;
+    }
+
+
 }
