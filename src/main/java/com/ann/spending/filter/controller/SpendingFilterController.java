@@ -1,10 +1,10 @@
 package com.ann.spending.filter.controller;
 
-import com.ann.spending.filter.dto.SearchSpendingRequest;
+import com.ann.spending.filter.dto.FilterSpendingRequest;
 import com.ann.spending.filter.page.OrderPage;
 import com.ann.spending.filter.service.SpendingFilterMapper;
+import com.ann.spending.search.spending.interfaces.SearchMapper;
 import com.ann.spending.spending.dto.SpendingDTO;
-import jakarta.annotation.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 public class SpendingFilterController {
 
 
-    private final SpendingFilterMapper spendingFilterMapper;
+    private final SearchMapper<SpendingDTO, FilterSpendingRequest> spendingFilterMapper;
 
     public SpendingFilterController(SpendingFilterMapper spendingFilterMapper) {
         this.spendingFilterMapper = spendingFilterMapper;
@@ -39,7 +39,7 @@ public class SpendingFilterController {
             @RequestParam(defaultValue = "ASC") Sort.Direction sortDirection,
             @RequestParam(defaultValue = "date") String sortBy
     ) {
-        SearchSpendingRequest searchSpendingRequest = new SearchSpendingRequest(
+        FilterSpendingRequest filterSpendingRequest = new FilterSpendingRequest(
                 categoryId,
                 spentFrom,
                 spentTo,
@@ -50,6 +50,6 @@ public class SpendingFilterController {
 
         OrderPage orderPage = new OrderPage(pageCount, pageSize, sortDirection, sortBy);
 
-        return ResponseEntity.ok(spendingFilterMapper.findSpendingByFilter(searchSpendingRequest, orderPage));
+        return ResponseEntity.ok(spendingFilterMapper.mapToDtoPage(filterSpendingRequest, orderPage));
     }
 }
