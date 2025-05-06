@@ -1,8 +1,13 @@
 package com.ann.spending.spending.service.impl.dao;
 
+import com.ann.spending.authorization.entity.User;
 import com.ann.spending.spending.SpendingRepository;
+import com.ann.spending.spending.dto.SpendingDTO;
 import com.ann.spending.spending.entity.Spending;
 import com.ann.spending.spending.interfaces.SpendingDaoService;
+import com.ann.spending.spending.interfaces.SpendingPageService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,4 +33,6 @@ public class SpendingRepositoryServiceImpl implements SpendingDaoService {
     public void deleteById(Long id) {
         spendingRepository.deleteById(id);
     }
+
+
 }

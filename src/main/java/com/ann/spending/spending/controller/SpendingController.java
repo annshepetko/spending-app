@@ -5,9 +5,12 @@ import com.ann.spending.spending.dto.request.AddSpendingRequest;
 import com.ann.spending.spending.dto.CreateSpendingBody;
 import com.ann.spending.spending.dto.SpendingDTO;
 import com.ann.spending.spending.entity.Spending;
+import com.ann.spending.spending.interfaces.SpendingPageService;
 import com.ann.spending.spending.mapper.CreationSpendingMapper;
 import com.ann.spending.spending.mapper.SpendingMapper;
 import com.ann.spending.spending.service.SpendingService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,13 +21,22 @@ public class SpendingController {
     private final CreationSpendingMapper creationMapping;
     private final SpendingService spendingService;
     private final SpendingMapper spendingMapper;
+    private final SpendingPageService spendingPageService;
 
-    public SpendingController(CreationSpendingMapper creationMapping, SpendingService spendingService, SpendingMapper spendingMapper) {
+    public SpendingController(CreationSpendingMapper creationMapping, SpendingService spendingService, SpendingMapper spendingMapper, SpendingPageService spendingPageService) {
         this.creationMapping = creationMapping;
         this.spendingService = spendingService;
         this.spendingMapper = spendingMapper;
+        this.spendingPageService = spendingPageService;
     }
 
+    @GetMapping("/page")
+    public ResponseEntity<Page<SpendingDTO>> retrieveSpendingPage(
+            @RequestAttribute("user") User user,
+            Pageable pageable
+    ){
+        return ResponseEntity.ok().body(spendingPageService.findSpendingPage(pageable, user));
+    }
 
     @PutMapping
     public ResponseEntity<SpendingDTO> updateSpending(@RequestBody SpendingDTO spendingDTO){
@@ -43,5 +55,6 @@ public class SpendingController {
     public void deleteSpending(@PathVariable("id") Long id){
         spendingService.deleteSpending(id);
     }
+
 
 }

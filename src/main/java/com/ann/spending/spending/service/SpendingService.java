@@ -1,19 +1,23 @@
 package com.ann.spending.spending.service;
 
+import com.ann.spending.authorization.entity.User;
 import com.ann.spending.category.entity.Category;
 import com.ann.spending.spending.dto.SpendingDTO;
 import com.ann.spending.spending.entity.Spending;
-import com.ann.spending.spending.SpendingRepository;
 import com.ann.spending.spending.dto.CreateSpendingBody;
+import com.ann.spending.spending.interfaces.SpendingCrudService;
 import com.ann.spending.spending.interfaces.SpendingDaoService;
+import com.ann.spending.spending.interfaces.SpendingPageService;
 import com.ann.spending.spending.mapper.SpendingMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Service
-public class SpendingService {
+public class SpendingService implements SpendingCrudService {
 
     private final SpendingDaoService spendingDaoService;
     private final SpendingMapper spendingMapper;
@@ -24,6 +28,7 @@ public class SpendingService {
         this.spendingMapper = spendingMapper;
     }
 
+    @Override
     @Transactional
     public void createSpending(CreateSpendingBody createSpendingBody) {
 
@@ -31,12 +36,14 @@ public class SpendingService {
         spendingDaoService.save(spending);
     }
 
+    @Override
     @Transactional
     public void deleteSpending(Long id){
         spendingDaoService.deleteById(id);
     }
 
 
+    @Override
     @Transactional
     public Spending update(SpendingDTO spendingDTO){
 
@@ -48,6 +55,5 @@ public class SpendingService {
 
         return spending;
     }
-
 
 }
