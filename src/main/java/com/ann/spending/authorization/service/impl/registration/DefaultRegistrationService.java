@@ -7,7 +7,7 @@ import com.ann.spending.authorization.mapper.UserAuthenticationMapper;
 import com.ann.spending.authorization.service.interfaces.AuthenticationResponseBuilder;
 import com.ann.spending.authorization.service.interfaces.RegistrationService;
 import com.ann.spending.authorization.service.repository.UserRepositoryService;
-import com.ann.spending.repository.CategoryRepository;
+import com.ann.spending.category.service.CategoryDaoService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,29 +19,26 @@ public class DefaultRegistrationService implements RegistrationService {
     private final UserAuthenticationMapper userAuthenticationMapper;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationResponseBuilder authResponseBuilder;
-    private final CategoryRepository categoryRepository;
+    private final CategoryDaoService categoryService;
 
     public DefaultRegistrationService(
             UserRepositoryService userRepositoryService,
             UserAuthenticationMapper userAuthenticationMapper,
             PasswordEncoder passwordEncoder,
             AuthenticationResponseBuilder authResponseBuilder,
-            CategoryRepository categoryRepository
-    ) {
+            CategoryDaoService categoryService ) {
         this.authResponseBuilder = authResponseBuilder;
         this.passwordEncoder = passwordEncoder;
         this.userRepositoryService = userRepositoryService;
         this.userAuthenticationMapper = userAuthenticationMapper;
-        this.categoryRepository = categoryRepository;
+        this.categoryService = categoryService;
     }
 
     @Override
     @Transactional
-    public AuthenticationResponse register(RegistrationRequest registrationRequest){
-
-
+    public AuthenticationResponse register(RegistrationRequest registrationRequest) {
         User user = createUserFromRegistrationRequest(registrationRequest);
-        user.setCategories(categoryRepository.findAll());
+        user.setCategories(categoryService.findGeneralCategories());
         userRepositoryService.save(user);
 
         return authResponseBuilder.buildResponse(user);

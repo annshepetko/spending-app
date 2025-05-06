@@ -1,6 +1,7 @@
 package com.ann.spending.authorization.entity;
 
 import com.ann.spending.category.entity.Category;
+import com.ann.spending.spending.entity.Spending;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,7 +24,7 @@ public class User implements UserDetails {
     @Id
     @SequenceGenerator(name = "user_sequence_generator", sequenceName = "user_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence_generator")
-    @Column(name = "user_id")
+
     private Long id;
 
     @Column(name = "name", nullable = false)
@@ -37,10 +38,28 @@ public class User implements UserDetails {
 
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @ManyToMany(
+            cascade = {CascadeType.PERSIST}
+    )
+    @JoinTable(
+            inverseJoinColumns = @JoinColumn(name = "category_id"),
+            joinColumns = @JoinColumn(name = "user_id")
+    )
     private List<Category> categories = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Spending> spending = new ArrayList<>();
 
+
+    public void addSpending(Spending spending){
+        spending.setUser(this);
+        this.spending.add(spending);
+    }
+
+    public void addCategory(Category category) {
+        this.categories.add(category);
+        category.getUsers().add(this);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

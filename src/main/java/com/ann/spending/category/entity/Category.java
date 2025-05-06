@@ -1,30 +1,40 @@
 package com.ann.spending.category.entity;
 
 import com.ann.spending.authorization.entity.User;
+import com.ann.spending.spending.entity.Spending;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Category {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_id_seq")
-    @SequenceGenerator(name = "category_id_seq", allocationSize = 1)
-    @Column(name = "category_id", nullable = false)
+    @SequenceGenerator(name = "category_seq_gen", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_seq_gen")
+    @Column(name = "id", nullable = false)
     private Long id;
+
+
+    public Category(Long id) {
+        this.id = id;
+    }
 
     private String name;
 
-    @ManyToOne
-    private User user;
+    @ManyToMany(mappedBy = "categories")
+    private List<User> users;
 
+
+    private Integer index;
+
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL})
+    private List<Spending> spending = new ArrayList<>();
 }
