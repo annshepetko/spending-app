@@ -18,7 +18,7 @@ public class SpendingPageServiceImpl implements SpendingPageService {
     }
 
     @Override
-    public Page<SpendingDTO> findSpendingPage(Pageable pageable, User user) {
-        return spendingRepository.findAll(pageable, user.getId());
+    public Page<SpendingDTO> findSpendingPage(Pageable pageable, Long userId) {
+        return spendingRepository.findAll(pageable, userId);
     }
 }
