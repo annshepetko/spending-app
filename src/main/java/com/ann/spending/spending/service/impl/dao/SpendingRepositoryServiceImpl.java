@@ -1,6 +1,5 @@
 package com.ann.spending.spending.service.impl.dao;
 
-import com.ann.spending.authorization.entity.User;
 import com.ann.spending.spending.SpendingRepository;
 import com.ann.spending.spending.dto.SpendingDTO;
 import com.ann.spending.spending.entity.Spending;
@@ -11,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SpendingRepositoryServiceImpl implements SpendingDaoService {
+public class SpendingRepositoryServiceImpl implements SpendingDaoService, SpendingPageService {
 
     private final SpendingRepository spendingRepository;
 
@@ -35,4 +34,8 @@ public class SpendingRepositoryServiceImpl implements SpendingDaoService {
     }
 
 
+    @Override
+    public Page<SpendingDTO> findSpendingPage(Pageable pageable, Long userId) {
+        return spendingRepository.findAll(pageable, userId);
+    }
 }

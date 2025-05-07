@@ -35,7 +35,7 @@ public class SpendingController {
             @RequestAttribute("user") User user,
             Pageable pageable
     ){
-        return ResponseEntity.ok().body(spendingPageService.findSpendingPage(pageable, user));
+        return ResponseEntity.ok().body(spendingPageService.findSpendingPage(pageable, user.getId()));
     }
 
     @PutMapping
@@ -55,6 +55,5 @@ public class SpendingController {
     public void deleteSpending(@PathVariable("id") Long id){
         spendingService.deleteSpending(id);
     }
-
 
 }

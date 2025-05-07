@@ -1,30 +1,46 @@
 package com.ann.spending.category.controller;
 
 import com.ann.spending.authorization.entity.User;
-import com.ann.spending.category.entity.Category;
-import com.ann.spending.category.view.CategoryDTO;
-import com.sun.jdi.event.StepEvent;
-import org.springframework.http.ResponseEntity;
+import com.ann.spending.category.service.CategoryCrudService;
+import com.ann.spending.category.view.AddCategoryRequest;
+import com.ann.spending.category.view.CategoryReorderRequest;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/v1/categories")
 public class CategoryController {
 
-    @GetMapping
-    public String getCategoryName(){
+    private final CategoryCrudService categoryCrudService;
 
-        // todo: implement cruds for category
-        // todo: implement sorting
-        return "hello";
+    public CategoryController(CategoryCrudService categoryCrudService) {
+        this.categoryCrudService = categoryCrudService;
+
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable("id") Long id, @RequestAttribute("user") User user){
+        categoryCrudService.deleteCategory(id, user.getId());
+    }
+
+    @PostMapping
+    public void addCategory(
+
+            @Valid
+            @RequestBody AddCategoryRequest addCategoryRequest,
+            @RequestAttribute("user") User user
+    ){
+
+        categoryCrudService.createCategory(addCategoryRequest.name(), user);
     }
 
     @PatchMapping("/reorder")
-    public ResponseEntity<Void> reorderCategories(@RequestAttribute("user") User user, List<CategoryDTO> categoryDTOS){
+    public void reorderCategories(
+            @RequestAttribute("user") User user,
+            @Valid @RequestBody CategoryReorderRequest categoryDTOS
+    ){
 
-        return ResponseEntity.ok().build();
+        categoryCrudService.reorderCategories(user, categoryDTOS.getCategories());
     }
 
 }

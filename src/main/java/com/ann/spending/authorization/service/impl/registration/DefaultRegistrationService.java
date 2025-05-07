@@ -38,7 +38,7 @@ public class DefaultRegistrationService implements RegistrationService {
     @Transactional
     public AuthenticationResponse register(RegistrationRequest registrationRequest) {
         User user = createUserFromRegistrationRequest(registrationRequest);
-        user.setCategories(categoryService.findGeneralCategories());
+        user.setCategories(categoryService.findGeneralCategories(user));
         userRepositoryService.save(user);
 
         return authResponseBuilder.buildResponse(user);

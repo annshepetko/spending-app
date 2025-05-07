@@ -1,6 +1,5 @@
 package com.ann.spending.spending;
 
-import com.ann.spending.authorization.entity.User;
 import com.ann.spending.spending.dto.SpendingDTO;
 import com.ann.spending.spending.entity.Spending;
 import org.springframework.data.domain.Page;
@@ -20,8 +19,9 @@ public interface SpendingRepository extends JpaRepository<Spending, Long> {
         s.updatedAt
     )
     FROM Spending s
-    WHERE s.user.id = :userId
+    where s.user.id = :userId
 """)
     Page<SpendingDTO> findAll(Pageable pageable, Long userId);
+
 
 }
