@@ -2,12 +2,11 @@ package com.ann.spending.dashboard.service;
 
 import com.ann.spending.authorization.entity.User;
 import com.ann.spending.calculation.DashboardSpendingCalculator;
-import com.ann.spending.calculation.util.PercentCalcUtil;
 import com.ann.spending.calculation.credential.SpendingRange;
-import com.ann.spending.category.mapper.CategoryMapper;
+import com.ann.spending.calculation.util.PercentCalcUtil;
+import com.ann.spending.category.service.CategoryDaoService;
 import com.ann.spending.category.view.CategoryDTO;
 import com.ann.spending.dashboard.view.DashboardView;
-import com.ann.spending.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,17 +19,17 @@ import java.util.List;
 public class DashBoardViewService {
 
     private final DashboardSpendingCalculator spendingCalculator;
-    private final CategoryMapper categoryMapper;
+    private final CategoryDaoService categoryDaoService;
 
-    public DashBoardViewService(CategoryMapper categoryMapper, UserRepository userRepository, DashboardSpendingCalculator spendingCalculator, CategoryMapper categoryMapper1) {
+    public DashBoardViewService(DashboardSpendingCalculator spendingCalculator, CategoryDaoService categoryDaoService) {
         this.spendingCalculator = spendingCalculator;
-        this.categoryMapper = categoryMapper1;
+        this.categoryDaoService = categoryDaoService;
     }
 
     @Transactional
     public DashboardView retrieveDashboard(User user) {
 
-        List<CategoryDTO> categories = categoryMapper.findCategoriesByUserId(user);
+        List<CategoryDTO> categories = categoryDaoService.findUserCategories(user);
 
         BigDecimal currentSpending = spendingCalculator.calculateSpending(user, Period.CURRENT_MONTH.getNeededDate());
         BigDecimal prevMonthSpending = spendingCalculator.calculateSpending(user, Period.PREV_MONTH.getNeededDate());

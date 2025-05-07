@@ -19,7 +19,7 @@ public class Category {
     @Id
     @SequenceGenerator(name = "category_seq_gen", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_seq_gen")
-    @Column(name = "id", nullable = false)
+    @Column(name = "category_id", nullable = false)
     private Long id;
 
 
@@ -29,11 +29,8 @@ public class Category {
 
     private String name;
 
-    @ManyToMany(mappedBy = "categories")
-    private List<User> users;
-
-
-    private Integer index;
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserCategory> userCategories = new ArrayList<>();
 
     @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL})
     private List<Spending> spending = new ArrayList<>();

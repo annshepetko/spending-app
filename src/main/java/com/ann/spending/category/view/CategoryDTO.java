@@ -1,4 +1,16 @@
 package com.ann.spending.category.view;
 
-public record CategoryDTO (Long id, String name, Integer index){
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
+
+public record CategoryDTO (
+
+        @NotNull
+        @Positive
+        Long id,
+        @Size(min = 2, max = 64, message = "Invalid name length")
+        String name,
+        Long index){
 }

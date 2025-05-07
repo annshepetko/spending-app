@@ -1,10 +1,13 @@
-INSERT INTO category(id, name, index) VALUES
-(1, 'Bills', 7),
-(2, 'Transport', 8),
-(3, 'Mobile', 6),
-(4, 'Shopping', 5),
-(5, 'Insurance', 4),
-(6, 'Voucher', 3),
-(7, 'Internet', 2),
-(8, 'Electricity', 1)
+
+
+
+INSERT INTO category(category_id, name) VALUES
+(nextval('category_seq_gen'), 'Bills'),
+(nextval('category_seq_gen'), 'Transport'),
+(nextval('category_seq_gen'), 'Mobile'),
+(nextval('category_seq_gen'), 'Shopping'),
+(nextval('category_seq_gen'), 'Insurance'),
+(nextval('category_seq_gen'), 'Voucher'),
+(nextval('category_seq_gen'), 'Internet'),
+(nextval('category_seq_gen'), 'Electricity')
 

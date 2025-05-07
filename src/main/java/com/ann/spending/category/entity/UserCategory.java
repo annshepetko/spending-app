@@ -1,34 +1,35 @@
 package com.ann.spending.category.entity;
 
 import com.ann.spending.authorization.entity.User;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+import jakarta.persistence.*;
 
 @Entity
 public class UserCategory {
 
+
     @EmbeddedId
     private UserCategoryId userCategoryId = new UserCategoryId();
 
-    public UserCategoryId getUserCategoryId() {
-        return userCategoryId;
-    }
-
-    @MapsId
+    @MapsId("userId")
     @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @MapsId
-    @ManyToOne
+    @MapsId("categoryId")
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE} )
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    private Integer index;
+    private Long index;
 
+    public UserCategory() {
+    }
 
-    public void setUserCategoryId(UserCategoryId userCategoryId) {
+    public UserCategory(UserCategoryId userCategoryId,User user, Category category, Long index) {
         this.userCategoryId = userCategoryId;
+        this.user = user;
+        this.category = category;
+        this.index = index;
     }
 
     public User getUser() {
@@ -47,11 +48,11 @@ public class UserCategory {
         this.category = category;
     }
 
-    public Integer getIndex() {
+    public Long getIndex() {
         return index;
     }
 
-    public void setIndex(Integer index) {
+    public void setIndex(Long index) {
         this.index = index;
     }
 
