@@ -4,5 +4,5 @@ spring:
       on-profile: prod
   datasource:
     username: postgres
-    password: EyjMUYEyrOdIobHWiTmfihuyQGoNQgLT
-    url: postgresql://postgres:EyjMUYEyrOdIobHWiTmfihuyQGoNQgLT@postgres.railway.internal:5432/spending
+    password: ${POSTGRES_PASSWORD}
+    url: ${POSTGRES_URL}
