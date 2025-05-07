@@ -19,3 +19,5 @@ spring:
     out-of-order: false
     clean-disabled: true
     mixed: false
+    url: ${POSTGRES_URL}
+    password:  ${POSTGRES_PASSWORD}
