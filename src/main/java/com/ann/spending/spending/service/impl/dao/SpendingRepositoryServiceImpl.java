@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SpendingRepositoryServiceImpl implements SpendingDaoService, SpendingPageService {
+public class SpendingRepositoryServiceImpl implements SpendingDaoService {
 
     private final SpendingRepository spendingRepository;
 
@@ -34,8 +34,4 @@ public class SpendingRepositoryServiceImpl implements SpendingDaoService, Spendi
     }
 
 
-    @Override
-    public Page<SpendingDTO> findSpendingPage(Pageable pageable, Long userId) {
-        return spendingRepository.findAll(pageable, userId);
-    }
 }

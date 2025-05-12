@@ -6,6 +6,9 @@ import com.ann.spending.authorization.dto.AuthenticationResponse;
 import com.ann.spending.authorization.dto.RegistrationRequest;
 import com.ann.spending.authorization.service.interfaces.AuthenticationService;
 import com.ann.spending.authorization.service.interfaces.RegistrationService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +18,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Test Application",
+                description = "Description"
+        )
+)
+@Tag(name = "Auth", description = "Operations related to products")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {

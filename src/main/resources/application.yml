@@ -1,6 +1,10 @@
 spring:
   profiles:
-    active: prod
+    active: ${ACTIVE_PROFILE}
 
 
 
+secrets:
+  accessTokenExpiration: 10000
+  refreshTokenExpiration: 1312312312312
+  jwtSecret: 357638792F423F4428472B4B6250655368566D597133743677397A2443264629

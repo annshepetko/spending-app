@@ -37,7 +37,13 @@ public class SecurityConfig {
                         request
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
-                                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html").permitAll()
+                                .requestMatchers(
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs",
+                                        "/v3/api-docs.yaml",
+                                        "/v3/api-docs/swagger-config"
+                                ).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider).build();
