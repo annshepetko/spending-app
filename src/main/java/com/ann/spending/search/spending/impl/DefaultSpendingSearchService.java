@@ -1,6 +1,6 @@
 package com.ann.spending.search.spending.impl;
 
-import com.ann.spending.filter.page.OrderPage;
+import com.ann.spending.filter.page.PageParams;
 import com.ann.spending.search.spending.interfaces.SearchingSpendingService;
 import com.ann.spending.search.spending.specification.SpendingSearchSpecification;
 import com.ann.spending.spending.entity.Spending;
@@ -20,8 +20,8 @@ public class DefaultSpendingSearchService extends SearchingSpendingService<List<
     }
 
     @Override
-    public Page<Spending> findByFilter(List<String> filter, OrderPage orderPage) {
-        return super.findByFilter(filter, orderPage);
+    public Page<Spending> findByFilter(List<String> filter, PageParams pageParams) {
+        return super.findByFilter(filter, pageParams);
     }
 
     @Override

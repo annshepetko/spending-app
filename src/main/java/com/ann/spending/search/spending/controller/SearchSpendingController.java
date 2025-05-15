@@ -1,6 +1,6 @@
 package com.ann.spending.search.spending.controller;
 
-import com.ann.spending.filter.page.OrderPage;
+import com.ann.spending.filter.page.PageParams;
 import com.ann.spending.search.spending.interfaces.SearchMapper;
 import com.ann.spending.search.spending.mapper.SpendingSearchMapper;
 import com.ann.spending.spending.dto.SpendingDTO;
@@ -32,8 +32,8 @@ public class SearchSpendingController {
             @RequestParam(defaultValue = "date") String sortBy
     ) {
 
-        OrderPage orderPage = new OrderPage(pageCount, pageSize, sortDirection, sortBy);
+        PageParams pageParams = new PageParams(pageCount, pageSize, sortDirection, sortBy);
 
-        return ResponseEntity.ok(searchMapper.mapToDtoPage(prompt, orderPage));
+        return ResponseEntity.ok(searchMapper.mapToDtoPage(prompt, pageParams));
     }
 }

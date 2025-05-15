@@ -1,7 +1,7 @@
 package com.ann.spending.filter.controller;
 
 import com.ann.spending.filter.dto.FilterSpendingRequest;
-import com.ann.spending.filter.page.OrderPage;
+import com.ann.spending.filter.page.PageParams;
 import com.ann.spending.filter.service.SpendingFilterMapper;
 import com.ann.spending.search.spending.interfaces.SearchMapper;
 import com.ann.spending.spending.dto.SpendingDTO;
@@ -48,8 +48,8 @@ public class SpendingFilterController {
                 maxAmount
         );
 
-        OrderPage orderPage = new OrderPage(pageCount, pageSize, sortDirection, sortBy);
+        PageParams pageParams = new PageParams(pageCount, pageSize, sortDirection, sortBy);
 
-        return ResponseEntity.ok(spendingFilterMapper.mapToDtoPage(filterSpendingRequest, orderPage));
+        return ResponseEntity.ok(spendingFilterMapper.mapToDtoPage(filterSpendingRequest, pageParams));
     }
 }

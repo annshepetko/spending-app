@@ -2,7 +2,7 @@ package com.ann.spending.filter.service;
 
 import com.ann.spending.filter.dto.FilterSpendingRequest;
 
-import com.ann.spending.filter.page.OrderPage;
+import com.ann.spending.filter.page.PageParams;
 import com.ann.spending.search.spending.interfaces.SearchMapper;
 import com.ann.spending.search.spending.interfaces.SearchingSpendingService;
 import com.ann.spending.spending.dto.SpendingDTO;
@@ -26,8 +26,8 @@ public class SpendingFilterMapper implements SearchMapper<SpendingDTO, FilterSpe
 
 
     @Override
-    public Page<SpendingDTO> mapToDtoPage(FilterSpendingRequest filter, OrderPage orderPage) {
-        Page<Spending> page = searchingSpendingService.findByFilter(filter, orderPage);
+    public Page<SpendingDTO> mapToDtoPage(FilterSpendingRequest filter, PageParams pageParams) {
+        Page<Spending> page = searchingSpendingService.findByFilter(filter, pageParams);
 
         return page.map((s -> {
             return new SpendingDTO(

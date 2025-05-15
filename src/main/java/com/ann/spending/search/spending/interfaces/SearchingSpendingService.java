@@ -1,6 +1,6 @@
 package com.ann.spending.search.spending.interfaces;
 
-import com.ann.spending.filter.page.OrderPage;
+import com.ann.spending.filter.page.PageParams;
 import com.ann.spending.spending.entity.Spending;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -20,7 +20,7 @@ public abstract class SearchingSpendingService<T> implements SearchService<Spend
 
 
     @Override
-    public Page<Spending> findByFilter(T filter, OrderPage orderPage) {
+    public Page<Spending> findByFilter(T filter, PageParams pageParams) {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Spending> spendingCriteriaQuery = criteriaBuilder.createQuery(Spending.class);
@@ -29,13 +29,13 @@ public abstract class SearchingSpendingService<T> implements SearchService<Spend
         CriteriaRequestBody criteriaRequestBody = new CriteriaRequestBody(root, criteriaBuilder, spendingCriteriaQuery);
         Predicate predicate = buildPredicate(filter, criteriaRequestBody);
 
-        setSorting(criteriaRequestBody, orderPage);
+        setSorting(criteriaRequestBody, pageParams);
 
         spendingCriteriaQuery.where(predicate);
 
-        TypedQuery<Spending> typedQuery = getSpendingTypedQuery(orderPage, spendingCriteriaQuery);
+        TypedQuery<Spending> typedQuery = getSpendingTypedQuery(pageParams, spendingCriteriaQuery);
 
-        Pageable pageable = getPageable(orderPage);
+        Pageable pageable = getPageable(pageParams);
         long foundedCount = getSpendingCount(filter);
 
         return buildPage(typedQuery, pageable, foundedCount);
@@ -43,16 +43,16 @@ public abstract class SearchingSpendingService<T> implements SearchService<Spend
 
     protected abstract Predicate buildPredicate(T t, CriteriaRequestBody criteriaRequestBody);
 
-    private void setSorting(CriteriaRequestBody criteriaRequest, OrderPage orderPage) {
+    private void setSorting(CriteriaRequestBody criteriaRequest, PageParams pageParams) {
 
         CriteriaBuilder criteriaBuilder = criteriaRequest.criteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaRequest.criteriaQuery();
         Root root = criteriaRequest.root();
 
-        if (orderPage.getSortDirection() == Sort.Direction.ASC) {
-            criteriaQuery.orderBy(criteriaBuilder.asc(root.get(orderPage.getSortBy())));
+        if (pageParams.getSortDirection() == Sort.Direction.ASC) {
+            criteriaQuery.orderBy(criteriaBuilder.asc(root.get(pageParams.getSortBy())));
         } else {
-            criteriaQuery.orderBy(criteriaBuilder.desc(root.get(orderPage.getSortBy())));
+            criteriaQuery.orderBy(criteriaBuilder.desc(root.get(pageParams.getSortBy())));
         }
     }
 
@@ -61,11 +61,11 @@ public abstract class SearchingSpendingService<T> implements SearchService<Spend
         return new PageImpl<>(typedQuery.getResultList(), pageable, foundedCount);
     }
 
-    private TypedQuery<Spending> getSpendingTypedQuery(OrderPage orderPage, CriteriaQuery<Spending> spendingCriteriaQuery) {
+    private TypedQuery<Spending> getSpendingTypedQuery(PageParams pageParams, CriteriaQuery<Spending> spendingCriteriaQuery) {
 
         TypedQuery<Spending> typedQuery = entityManager.createQuery(spendingCriteriaQuery);
-        typedQuery.setFirstResult(orderPage.getPageCount() * orderPage.getPageSize());
-        typedQuery.setMaxResults(orderPage.getPageSize());
+        typedQuery.setFirstResult(pageParams.getPageCount() * pageParams.getPageSize());
+        typedQuery.setMaxResults(pageParams.getPageSize());
 
         return typedQuery;
     }
@@ -83,9 +83,9 @@ public abstract class SearchingSpendingService<T> implements SearchService<Spend
         return entityManager.createQuery(countQuery).getSingleResult();
     }
 
-    private Pageable getPageable(OrderPage orderPage) {
-        Sort sort = Sort.by(orderPage.getSortDirection(), orderPage.getSortBy());
-        return PageRequest.of(orderPage.getPageCount(), orderPage.getPageSize(), sort);
+    private Pageable getPageable(PageParams pageParams) {
+        Sort sort = Sort.by(pageParams.getSortDirection(), pageParams.getSortBy());
+        return PageRequest.of(pageParams.getPageCount(), pageParams.getPageSize(), sort);
     }
 
     public record CriteriaRequestBody<T>(

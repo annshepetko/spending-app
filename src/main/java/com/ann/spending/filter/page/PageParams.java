@@ -2,14 +2,14 @@ package com.ann.spending.filter.page;
 
 import org.springframework.data.domain.Sort;
 
-public class OrderPage {
+public class PageParams {
 
     private Integer pageCount = 0;
     private Integer pageSize = 5;
     private Sort.Direction sortDirection = Sort.Direction.ASC;
     private String sortBy;
 
-    public OrderPage(Integer pageCount, Integer pageSize, Sort.Direction sortDirection, String sortBy) {
+    public PageParams(Integer pageCount, Integer pageSize, Sort.Direction sortDirection, String sortBy) {
         this.pageCount = pageCount;
         this.pageSize = pageSize;
         this.sortDirection = sortDirection;

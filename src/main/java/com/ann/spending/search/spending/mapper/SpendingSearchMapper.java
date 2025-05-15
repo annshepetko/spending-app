@@ -1,7 +1,6 @@
 package com.ann.spending.search.spending.mapper;
 
-import com.ann.spending.filter.dto.FilterSpendingRequest;
-import com.ann.spending.filter.page.OrderPage;
+import com.ann.spending.filter.page.PageParams;
 import com.ann.spending.search.spending.interfaces.SearchMapper;
 import com.ann.spending.search.spending.interfaces.SearchingSpendingService;
 import com.ann.spending.search.spending.util.SearchSpendingUtil;
@@ -27,11 +26,11 @@ public class SpendingSearchMapper implements SearchMapper<SpendingDTO, String> {
     }
 
     @Override
-    public Page<SpendingDTO> mapToDtoPage(String filter, OrderPage orderPage) {
+    public Page<SpendingDTO> mapToDtoPage(String filter, PageParams pageParams) {
 
         List<String> keyWords = SearchSpendingUtil.getKeyWordsFromPrompt(filter);
 
-        Page<Spending> page = searchingSpendingService.findByFilter(keyWords, orderPage);
+        Page<Spending> page = searchingSpendingService.findByFilter(keyWords, pageParams);
 
         return page.map((s -> {
             return new SpendingDTO(

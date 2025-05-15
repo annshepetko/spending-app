@@ -1,7 +1,7 @@
 package com.ann.spending.filter.repository;
 
 import com.ann.spending.filter.dto.FilterSpendingRequest;
-import com.ann.spending.filter.page.OrderPage;
+import com.ann.spending.filter.page.PageParams;
 import com.ann.spending.search.spending.interfaces.SearchingSpendingService;
 import com.ann.spending.filter.specification.FilterSpendingSpecification;
 import com.ann.spending.spending.entity.Spending;
@@ -20,8 +20,8 @@ public class SpendingFilterService extends SearchingSpendingService<FilterSpendi
     }
 
     @Override
-    public Page<Spending> findByFilter(FilterSpendingRequest filter, OrderPage orderPage) {
-        return super.findByFilter(filter, orderPage);
+    public Page<Spending> findByFilter(FilterSpendingRequest filter, PageParams pageParams) {
+        return super.findByFilter(filter, pageParams);
     }
 
     @Override

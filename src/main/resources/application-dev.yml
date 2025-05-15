@@ -4,8 +4,8 @@ spring:
       on-profile: dev
   datasource:
     username: postgres
-    password: root
-    url: jdbc:postgresql://localhost:5432/spending
+    password: noizemcPyro1!
+    url: jdbc:postgresql://spending.cxg24aaeksx3.eu-north-1.rds.amazonaws.com:5432/postgres
   jpa:
     hibernate:
       ddl-auto: validate
