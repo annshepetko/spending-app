@@ -1,8 +1,6 @@
 spring:
   profiles:
-    active: dev
-
-
+    active: ${ACTIVE_PROFILE}
 
 secrets:
   accessTokenExpiration: 10000
