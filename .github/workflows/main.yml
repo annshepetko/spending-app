@@ -57,9 +57,7 @@ jobs:
                   docker image rm anndi/spending_app || true
           
                   # Pull latest images
-                  docker compose pull
-          
                   docker compose up -d
           
-                  docker image prune -f
+                          
           EOF
