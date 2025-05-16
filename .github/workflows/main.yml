@@ -41,7 +41,7 @@ jobs:
           dockerfile: Dockerfile
           platforms: linux/amd64
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spending-app:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spending_app:latest
 
       - name: Copy SSH key
         run: |
