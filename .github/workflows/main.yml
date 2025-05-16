@@ -1,46 +1,44 @@
-name: Build first pipeline for Spending app
+name: Build and Deploy Spending App
 
 on:
   push:
     branches:
       - main
+
 jobs:
   build-deploy:
-    name: build and deploy application
+    name: Build and Deploy Application
     runs-on: ubuntu-latest
+
     steps:
-      - name: check the code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: setup jdk 17
+      - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: 'corretto'
           java-version: 17
 
-      - name: build jar
+      - name: Build JAR without tests
         run: |
           mvn clean
           mvn -B package -DskipTests --file pom.xml
 
-      - name: build docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          dockerfile: Dockerfile
-          push: false
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spending-app:latest
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-      - name: login on dockerhub
-        uses: docker/login-action@v1
+      - name: Log in to DockerHub
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: push image
-        uses: docker/build-push-action@v2
+      - name: Build and push Docker image for linux/amd64
+        uses: docker/build-push-action@v5
         with:
           context: .
           dockerfile: Dockerfile
+          platforms: linux/amd64
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/spending-app:latest
