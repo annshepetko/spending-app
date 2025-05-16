@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record AuthenticationResponse(
         String accessToken,
-
+        String helloMessage,
         @JsonIgnore
         String refreshToken
 ) {

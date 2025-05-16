@@ -31,6 +31,6 @@ public class AuthResponseBuilderImpl implements AuthenticationResponseBuilder {
         String jwtToken = accessTokenService.generateToken(new HashMap<>(), user);
         String refreshToken = refreshTokenService.generateToken(new HashMap<>(), user);
 
-        return new AuthenticationResponse(jwtToken, refreshToken);
+        return new AuthenticationResponse(jwtToken, "HELLO FROM PIPELINE", refreshToken);
     }
 }
