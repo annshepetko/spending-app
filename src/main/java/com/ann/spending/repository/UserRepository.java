@@ -21,5 +21,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
    )
    BigDecimal findTotalSpendingByUserAndMonth(User user, int year, int month);
 
-   Optional<UserDetails> findByEmail(String email);
+   Optional<User> findByEmail(String email);
 }

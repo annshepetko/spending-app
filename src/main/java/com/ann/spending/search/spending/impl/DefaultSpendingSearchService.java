@@ -34,7 +34,7 @@ public class DefaultSpendingSearchService extends SearchingSpendingService<List<
         );
     }
 
-    private static Specification<Spending> buildSpecification(List<String> strings) {
+    private Specification<Spending> buildSpecification(List<String> strings) {
         return new SpendingSearchSpecification(strings);
     }
 

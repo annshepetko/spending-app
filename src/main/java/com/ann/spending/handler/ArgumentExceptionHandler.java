@@ -1,4 +1,4 @@
-package com.ann.spending.exception.handler;
+package com.ann.spending.handler;
 
 import io.swagger.v3.oas.annotations.Hidden;
 import org.springframework.http.HttpStatus;

@@ -14,6 +14,8 @@ import java.util.HashMap;
 public class AuthResponseBuilderImpl implements AuthenticationResponseBuilder {
 
     private final JwtTokenGenerator accessTokenService;
+    private final JwtTokenGenerator refreshTokenService;
+
 
     public AuthResponseBuilderImpl(
             @Qualifier("accessTokenManager") JwtTokenGenerator accessTokenService,
@@ -23,7 +25,6 @@ public class AuthResponseBuilderImpl implements AuthenticationResponseBuilder {
         this.refreshTokenService = refreshTokenService;
     }
 
-    private final JwtTokenGenerator refreshTokenService;
 
     @Override
     public AuthenticationResponse buildResponse(User user) {

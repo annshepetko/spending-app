@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,13 +19,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @OpenAPIDefinition(
         info = @Info(
-                title = "Test Application",
+                title = "Spending App Application",
                 description = "Description"
         )
 )
-@Tag(name = "Auth", description = "Operations related to products")
+@Tag(name = "Auth", description = "controller for authentication and registration")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
@@ -36,7 +38,7 @@ public class AuthenticationController {
     public AuthenticationController(
             @Qualifier("cookieAuthFactory")
             CookieFactory<String> authCookieFactory,
-            AuthenticationService authenticationService,
+            AuthenticationService<AuthenticationRequest> authenticationService,
             RegistrationService registrationService
     ) {
         this.authCookieFactory = authCookieFactory;
@@ -46,7 +48,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegistrationRequest request,
+            @Valid @RequestBody RegistrationRequest request,
             HttpServletResponse httpResponse
     ){
 
@@ -59,7 +61,7 @@ public class AuthenticationController {
 
     @PostMapping("/authenticate")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest authRequest,
+            @Valid @RequestBody AuthenticationRequest authRequest,
             HttpServletResponse httpResponse
     )
     {
