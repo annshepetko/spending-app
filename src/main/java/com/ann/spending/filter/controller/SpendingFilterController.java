@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/filter/spending")
+@CrossOrigin(origins = "*")
 public class SpendingFilterController {
 
 
