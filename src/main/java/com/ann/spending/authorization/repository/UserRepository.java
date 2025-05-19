@@ -1,4 +1,4 @@
-package com.ann.spending.repository;
+package com.ann.spending.authorization.repository;
 
 import com.ann.spending.authorization.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

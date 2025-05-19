@@ -2,11 +2,10 @@ package com.ann.spending.calculation;
 
 import com.ann.spending.authorization.entity.User;
 import com.ann.spending.calculation.credential.SpendingRange;
-import com.ann.spending.repository.UserRepository;
+import com.ann.spending.authorization.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.YearMonth;
 
 @Service
 public class DashboardSpendingCalculator implements SpendingCalculationService {

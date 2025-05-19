@@ -8,6 +8,7 @@ import com.ann.spending.authorization.service.interfaces.AuthenticationResponseB
 import com.ann.spending.authorization.service.interfaces.RegistrationService;
 import com.ann.spending.authorization.service.repository.UserRepositoryService;
 import com.ann.spending.category.service.CategoryDaoService;
+import com.ann.spending.exception.user.UserIsAlreadyExist;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,16 +38,25 @@ public class DefaultRegistrationService implements RegistrationService {
     @Override
     @Transactional
     public AuthenticationResponse register(RegistrationRequest registrationRequest) {
-        User user = createUserFromRegistrationRequest(registrationRequest);
-        user.setCategories(categoryService.findGeneralCategories(user));
-        userRepositoryService.save(user);
 
+        User user = createUserFromRegistrationRequest(registrationRequest);
+
+        if (isUserAlreadyExist(user)) {
+            throw new UserIsAlreadyExist("You are already registered");
+        }
+        ;
+        userRepositoryService.save(user);
         return authResponseBuilder.buildResponse(user);
+    }
+
+    private boolean isUserAlreadyExist(User user) {
+        return userRepositoryService.findByEmail(user.getEmail()).isPresent();
     }
 
     private User createUserFromRegistrationRequest(RegistrationRequest registrationRequest) {
         User user = userAuthenticationMapper.mapToUser(registrationRequest);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setCategories(categoryService.findGeneralCategories(user));
         return user;
     }
 

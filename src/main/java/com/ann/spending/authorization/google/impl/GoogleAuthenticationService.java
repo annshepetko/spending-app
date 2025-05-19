@@ -24,7 +24,7 @@ public class GoogleAuthenticationService implements AuthenticationService<Google
     public AuthenticationResponse authenticate(GoogleIdToken.Payload request) {
 
         String email = request.getEmail();
-        User user = userRepositoryService.findByEmail(email);
+        User user = userRepositoryService.findByEmailIfPresent(email);
 
         return authenticationResponseBuilder.buildResponse(user);
     }
