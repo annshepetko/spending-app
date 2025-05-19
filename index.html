@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Register</title>
+</head>
+<body>
+<button onclick="registerUser()">Зареєструвати</button>
+
+<script>
+    async function registerUser() {
+        const url = "http://13.60.210.148/api/v1/auth/register";
+
+        const data = {
+            username: "annaannn",
+            email: "asepeastkojjj@gmail.com",
+            password: "ijasdadfasdfasdfqwefqwe"
+        };
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify(data)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error("Помилка:", errorData);
+                return;
+            }
+
+            const result = await response.json();
+            console.log("Успіх:", result);
+        } catch (error) {
+            console.error("Помилка мережі:", error);
+        }
+    }
+</script>
+</body>
+</html>

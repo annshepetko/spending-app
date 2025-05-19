@@ -62,7 +62,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
 
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedOriginPatterns(List.of("https://cors-test.codehappy.dev/"));
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:63342"));
         configuration.setAllowCredentials(true);
 
 
