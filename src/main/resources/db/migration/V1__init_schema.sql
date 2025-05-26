@@ -4,6 +4,7 @@ CREATE SEQUENCE category_seq_gen START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE spending_id_generator START WITH 1 INCREMENT BY 1;
 
 -- USERS
+
 CREATE TABLE users (
                        user_id BIGINT PRIMARY KEY DEFAULT nextval('user_id_seq'),
                        name VARCHAR(255) NOT NULL,

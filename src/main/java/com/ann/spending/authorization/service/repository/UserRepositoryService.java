@@ -13,7 +13,6 @@ public class UserRepositoryService {
     private final UserRepository userRepository;
 
     public UserRepositoryService(UserRepository userRepository) {
-
         this.userRepository = userRepository;
     }
 

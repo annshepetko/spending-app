@@ -29,9 +29,13 @@ public class Category {
 
     private String name;
 
+    public Category(String name) {
+        this.name = name;
+    }
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserCategory> userCategories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL})
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Spending> spending = new ArrayList<>();
 }

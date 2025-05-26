@@ -25,7 +25,7 @@ public class CategoryMapper {
 
     public List<UserCategory> mapToUserCategoryList(List<CategoryDTO> incomingDtos, User user){
         return incomingDtos.stream()
-                .map((dto) -> new UserCategory(new UserCategoryId(user.getId(), dto.id()),user, new Category(dto.id()), dto.index()))
+                .map((dto) -> new UserCategory(new UserCategoryId(user.getId(), dto.id()), user, new Category(dto.id()), dto.index()))
                 .toList();
     }
 
@@ -56,12 +56,4 @@ public class CategoryMapper {
         return userCategory;
     }
 
-    public Category buildCategory(PatchCategoryRequest patchCategoryRequest){
-        Category category = new Category();
-
-        category.setName(patchCategoryRequest.name());
-        category.setId(patchCategoryRequest.id());
-
-        return category;
-    }
 }

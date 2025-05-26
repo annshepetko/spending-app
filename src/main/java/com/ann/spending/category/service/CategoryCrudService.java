@@ -39,6 +39,7 @@ public class CategoryCrudService {
         Category category = prepareCategory(name);
 
         UserCategory userCategory = categoryMapper.buldUserCategory(category, user);
+
         userCategoryRepository.save(userCategory);
     }
 
@@ -50,8 +51,8 @@ public class CategoryCrudService {
         return category;
     }
 
-    public void deleteCategory(Long id, Long userId){
-        userCategoryRepository.deleteById(new UserCategoryId(userId, id));
+    public void deleteCategory(Long categoryId, Long userId) {
+        userCategoryRepository.deleteById(new UserCategoryId(userId, categoryId));
     }
 
 }

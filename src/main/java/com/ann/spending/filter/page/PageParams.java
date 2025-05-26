@@ -16,6 +16,9 @@ public class PageParams {
         this.sortBy = sortBy;
     }
 
+    public PageParams() {
+    }
+
     public Integer getPageCount() {
         return pageCount;
     }

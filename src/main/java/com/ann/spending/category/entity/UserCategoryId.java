@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class UserCategoryId  implements Serializable {
+public class UserCategoryId implements Serializable {
 
     private Long userId;
     private Long categoryId;

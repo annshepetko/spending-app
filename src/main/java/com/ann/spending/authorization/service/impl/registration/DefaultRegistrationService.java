@@ -44,8 +44,8 @@ public class DefaultRegistrationService implements RegistrationService {
         if (isUserAlreadyExist(user)) {
             throw new UserIsAlreadyExist("You are already registered");
         }
-        ;
         userRepositoryService.save(user);
+
         return authResponseBuilder.buildResponse(user);
     }
 
@@ -59,7 +59,4 @@ public class DefaultRegistrationService implements RegistrationService {
         user.setCategories(categoryService.findGeneralCategories(user));
         return user;
     }
-
-
-
 }

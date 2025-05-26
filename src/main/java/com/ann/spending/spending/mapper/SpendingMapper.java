@@ -16,7 +16,8 @@ public class SpendingMapper {
         Spending spending =  Spending.builder()
                 .user(createSpendingBody.user())
                 .category(Category.builder()
-                        .id(createSpendingBody.categoryId()).build()
+                        .id(createSpendingBody.categoryId())
+                        .build()
                 )
                 .description(createSpendingBody.description())
                 .updatedAt(LocalDateTime.now())
@@ -24,7 +25,7 @@ public class SpendingMapper {
                 .build();
 
         spending.setAmount(createSpendingBody.amount());
-
+        createSpendingBody.user().getSpending().add(spending);
         return spending;
     }
 

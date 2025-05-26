@@ -36,5 +36,4 @@ public class SpendingSearchSpecification implements Specification<Spending> {
 
     }
 
-
 }

@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DefaultAuthenticationServiceImpl implements AuthenticationService<AuthenticationRequest> {
 
-
     private final UserRepositoryService userRepositoryService;
     private final AuthenticationManager authenticationManager;
     private final AuthenticationResponseBuilder authResponseBuilder;

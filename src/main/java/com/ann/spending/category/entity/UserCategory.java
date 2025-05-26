@@ -25,11 +25,16 @@ public class UserCategory {
     public UserCategory() {
     }
 
-    public UserCategory(UserCategoryId userCategoryId,User user, Category category, Long index) {
+    public UserCategory(UserCategoryId userCategoryId, User user, Category category, Long index) {
         this.userCategoryId = userCategoryId;
         this.user = user;
         this.category = category;
         this.index = index;
+    }
+
+    public UserCategory(User user, Category category) {
+        this.user = user;
+        this.category = category;
     }
 
     public User getUser() {

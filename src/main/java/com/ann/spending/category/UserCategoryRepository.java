@@ -19,4 +19,5 @@ public interface UserCategoryRepository extends JpaRepository<UserCategory, User
     @Query("select uc from UserCategory uc where uc.user = :user")
     List<UserCategory> findCategoriesByUser(User user);
 
+
 }

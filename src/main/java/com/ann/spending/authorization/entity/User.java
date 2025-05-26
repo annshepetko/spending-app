@@ -39,13 +39,26 @@ public class User implements UserDetails {
 
     private String password;
 
+    public User(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserCategory> categories = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Spending> spending = new ArrayList<>();
 
+    public void addSpending(Spending spending) {
+        spending.setUser(this);
+        this.spending.add(spending);
+    }
+
+    public void addCategory(UserCategory userCategory) {
+        this.categories.add(userCategory);
+        userCategory.setUser(this);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

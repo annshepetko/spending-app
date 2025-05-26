@@ -6,6 +6,7 @@ import com.ann.spending.calculation.credential.SpendingRange;
 import com.ann.spending.calculation.util.PercentCalcUtil;
 import com.ann.spending.category.service.CategoryDaoService;
 import com.ann.spending.category.view.CategoryDTO;
+import com.ann.spending.dashboard.range.Period;
 import com.ann.spending.dashboard.view.DashboardView;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,19 +41,5 @@ public class DashBoardViewService {
 
     }
 
-    enum Period {
-
-        PREV_MONTH {
-            @Override
-            public SpendingRange getNeededDate() {
-                return new SpendingRange(LocalDateTime.now().minusMonths(1), LocalDateTime.MAX);
-            }
-        },
-        CURRENT_MONTH;
-
-        public SpendingRange getNeededDate(){
-            return new SpendingRange(LocalDateTime.now(), LocalDateTime.MAX);
-        };
-    }
 
 }

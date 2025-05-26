@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -30,6 +31,12 @@ public class Spending {
 
     private BigDecimal amount;
 
+    public Spending(BigDecimal amount, LocalDateTime date) {
+
+        this.amount = amount;
+        this.date = date;
+    }
+
     private String description;
 
     private LocalDateTime updatedAt;
@@ -38,12 +45,16 @@ public class Spending {
     private LocalDateTime date;
 
 
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 
     public void setAmount(BigDecimal amount) {
-        if (amount.longValue() < 0){
+        if (amount.longValue() < 0) {
             throw new RuntimeException("amount is less than 0");
         }
         this.amount = amount;
@@ -88,7 +99,6 @@ public class Spending {
 
     public void setCategory(Category category){
         this.category = category;
-        category.getSpending().add(this);
     }
 
 }
