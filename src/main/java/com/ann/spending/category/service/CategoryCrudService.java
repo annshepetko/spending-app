@@ -7,6 +7,7 @@ import com.ann.spending.category.entity.Category;
 import com.ann.spending.category.entity.UserCategory;
 import com.ann.spending.category.entity.UserCategoryId;
 import com.ann.spending.category.mapper.CategoryMapper;
+import com.ann.spending.category.view.AddCategoryRequest;
 import com.ann.spending.category.view.CategoryDTO;
 import com.ann.spending.category.view.PatchCategoryRequest;
 import org.springframework.stereotype.Service;
@@ -34,19 +35,20 @@ public class CategoryCrudService {
     }
 
     @Transactional
-    public void createCategory(String name, User user){
+    public void createCategory(AddCategoryRequest addCategoryRequest, User user) {
 
-        Category category = prepareCategory(name);
+        Category category = prepareCategory(addCategoryRequest);
 
         UserCategory userCategory = categoryMapper.buldUserCategory(category, user);
 
         userCategoryRepository.save(userCategory);
     }
 
-    private Category prepareCategory(String name) {
+    private Category prepareCategory(AddCategoryRequest addCategoryRequest) {
 
         Category category = new Category();
-        category.setName(name);
+        category.setName(addCategoryRequest.name());
+        category.setIconName(addCategoryRequest.iconName());
 
         return category;
     }

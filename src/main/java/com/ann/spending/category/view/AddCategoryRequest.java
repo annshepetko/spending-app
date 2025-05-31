@@ -9,5 +9,9 @@ public record AddCategoryRequest(
         @NotEmpty(message = "Name is empty")
         @NotNull
         @Size(min = 1, max = 64, message = "Category name violation")
-        String name) {
+        String name,
+        String iconName
+
+) {
+
 }

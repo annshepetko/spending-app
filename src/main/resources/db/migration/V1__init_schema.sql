@@ -15,9 +15,10 @@ CREATE TABLE users (
 
 
 -- CATEGORIES
-CREATE TABLE category (
-                          category_id BIGINT PRIMARY KEY DEFAULT nextval('category_seq_gen'),
-                          name VARCHAR(255)
+CREATE TABLE category(
+                         category_id BIGINT PRIMARY KEY DEFAULT nextval('category_seq_gen'),
+                         name        VARCHAR(255),
+                         icon_name   VARCHAR(255) NOT NULL
 );
 
 -- USER_CATEGORY (Join Table with Composite Key)

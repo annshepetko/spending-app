@@ -4,6 +4,7 @@ import com.ann.spending.authorization.entity.User;
 import com.ann.spending.authorization.repository.UserRepository;
 import com.ann.spending.category.CategoryRepository;
 import com.ann.spending.category.UserCategoryRepository;
+import com.ann.spending.category.view.AddCategoryRequest;
 import com.ann.spending.data.AuthDataFactory;
 import com.ann.spending.data.CategoryServiceDataFactory;
 import com.ann.spending.category.entity.Category;
@@ -35,18 +36,21 @@ class CategoryCrudServiceTest {
     @Autowired
     CategoryRepository categoryRepository;
 
+    AddCategoryRequest addCategoryRequest;
+
     User user;
 
     @BeforeEach
     void setUp() {
         this.user = AuthDataFactory.createUser();
+        this.addCategoryRequest = CategoryServiceDataFactory.createCategoryRequest();
     }
 
     @Test
     void createCategoryTest() {
 
         User savedUser = userRepository.save(user);
-        categoryCrudService.createCategory("tech", savedUser);
+        categoryCrudService.createCategory(addCategoryRequest, savedUser);
 
         List<UserCategory> userCategories = userCategoryRepository.findCategoriesByUser(savedUser);
 
@@ -63,7 +67,7 @@ class CategoryCrudServiceTest {
     void deleteCategory() {
 
         User savedUser = userRepository.save(user);
-        Category savedCategory = categoryRepository.save(new Category("tech"));
+        Category savedCategory = categoryRepository.save(new Category("tech", "techIcon"));
 
         UserCategory userCategory = new UserCategory(savedUser, savedCategory);
         userCategoryRepository.save(userCategory);

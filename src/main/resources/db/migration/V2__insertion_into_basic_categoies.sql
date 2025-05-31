@@ -1,13 +1,13 @@
 
 
 
-INSERT INTO category(category_id, name) VALUES
-(nextval('category_seq_gen'), 'Bills'),
-(nextval('category_seq_gen'), 'Transport'),
-(nextval('category_seq_gen'), 'Mobile'),
-(nextval('category_seq_gen'), 'Shopping'),
-(nextval('category_seq_gen'), 'Insurance'),
-(nextval('category_seq_gen'), 'Voucher'),
-(nextval('category_seq_gen'), 'Internet'),
-(nextval('category_seq_gen'), 'Electricity')
+INSERT INTO category(category_id, name, icon_name)
+VALUES (nextval('category_seq_gen'), 'Bills', 'billsIcon'),
+       (nextval('category_seq_gen'), 'Transport', 'airplaneIcon'),
+       (nextval('category_seq_gen'), 'Mobile', 'mobileIcon'),
+       (nextval('category_seq_gen'), 'Shopping', ' shoppingIcon'),
+       (nextval('category_seq_gen'), 'Insurance', 'healthIcon'),
+       (nextval('category_seq_gen'), 'Voucher', 'percentageIcon'),
+       (nextval('category_seq_gen'), 'Internet', 'internetIcon'),
+       (nextval('category_seq_gen'), 'Electricity', 'electricityIcon')
 

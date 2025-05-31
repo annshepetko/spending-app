@@ -52,8 +52,8 @@ class DashBoardViewServiceTest {
     void shouldRetrieveDashboardCorrectly() {
 
         List<CategoryDTO> mockCategories = List.of(
-                new CategoryDTO(1L, "Food", 1L),
-                new CategoryDTO(2L, "Transport", 2L)
+                new CategoryDTO(1L, "Food", 1L, ""),
+                new CategoryDTO(2L, "Transport", 2L, "")
         );
 
         BigDecimal currentSpending = new BigDecimal("150");

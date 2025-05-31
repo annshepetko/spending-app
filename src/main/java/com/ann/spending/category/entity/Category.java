@@ -38,4 +38,12 @@ public class Category {
 
     @OneToMany(mappedBy = "category", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Spending> spending = new ArrayList<>();
+
+    @Column(name = "icon_name", nullable = false)
+    private String iconName;
+
+    public Category(String name, String iconName) {
+        this.name = name;
+        this.iconName = iconName;
+    }
 }

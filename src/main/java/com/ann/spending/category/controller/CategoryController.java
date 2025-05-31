@@ -31,7 +31,7 @@ public class CategoryController {
             @RequestAttribute("user") User user
     ){
 
-        categoryCrudService.createCategory(addCategoryRequest.name(), user);
+        categoryCrudService.createCategory(addCategoryRequest, user);
     }
 
     @PatchMapping("/reorder")

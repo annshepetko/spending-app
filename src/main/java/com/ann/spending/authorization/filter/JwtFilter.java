@@ -118,7 +118,6 @@ public class JwtFilter extends OncePerRequestFilter {
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-
     }
 
     private Optional<Cookie> findCookieByName(Cookie[] cookies, String name) {

@@ -13,7 +13,7 @@ import java.util.List;
 public interface UserCategoryRepository extends JpaRepository<UserCategory, UserCategoryId> {
 
 
-    @Query("SELECT new com.ann.spending.category.view.CategoryDTO(uc.category.id, uc.category.name, uc.index) from UserCategory uc WHERE uc.user.id = :userId ORDER BY uc.index ASC")
+    @Query("SELECT new com.ann.spending.category.view.CategoryDTO(uc.category.id, uc.category.name, uc.index, uc.category.iconName) from UserCategory uc WHERE uc.user.id = :userId ORDER BY uc.index ASC")
     List<CategoryDTO> findCategoryViewsByUserId(Long userId);
 
     @Query("select uc from UserCategory uc where uc.user = :user")

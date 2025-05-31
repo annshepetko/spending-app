@@ -20,7 +20,7 @@ jobs:
           distribution: 'corretto'
           java-version: 17
 
-      - name: Build JAR without tests
+      - name: Build JAR tests
         run: |
           mvn clean
           mvn clean test
