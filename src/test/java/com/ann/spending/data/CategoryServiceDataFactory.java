@@ -6,7 +6,7 @@ import com.ann.spending.category.view.AddCategoryRequest;
 public class CategoryServiceDataFactory {
 
     public static Category createCategory() {
-        return new Category("tech");
+        return new Category("tech", "icon");
     }
 
     public static AddCategoryRequest createCategoryRequest() {
