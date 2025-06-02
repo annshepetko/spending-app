@@ -11,6 +11,8 @@ import com.ann.spending.authorization.service.repository.UserRepositoryService;
 import com.ann.spending.category.entity.UserCategory;
 import com.ann.spending.category.service.CategoryDaoService;
 import com.ann.spending.exception.user.UserIsAlreadyExist;
+import com.ann.spending.user.UserCrudService;
+import com.ann.spending.user.service.validator.PasswordEncodeManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +31,9 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class DefaultRegistrationServiceTest {
 
+    @Mock
+    UserCrudService userCrudService;
+
 
     @Mock
     UserRepositoryService userRepositoryService;
@@ -37,7 +42,7 @@ class DefaultRegistrationServiceTest {
     UserAuthenticationMapper userAuthenticationMapper;
 
     @Mock
-    PasswordEncoder passwordEncoder;
+    PasswordEncodeManager passwordEncoder;
 
     @Mock
     AuthenticationResponseBuilder authResponseBuilder;
@@ -63,15 +68,14 @@ class DefaultRegistrationServiceTest {
         List<UserCategory> categories = List.of(new UserCategory());
 
         when(userAuthenticationMapper.mapToUser(registrationRequest)).thenReturn(user);
-        when(passwordEncoder.encode(user.getPassword())).thenReturn("encoded-password");
+        when(passwordEncoder.encodeString(user.getPassword())).thenReturn("encoded-password");
         when(categoryService.findGeneralCategories(user)).thenReturn(categories);
-        when(userRepositoryService.findByEmail("test@example.com")).thenReturn(Optional.empty());
         when(authResponseBuilder.buildResponse(user)).thenReturn(new AuthenticationResponse("token", "refresh token"));
 
         AuthenticationResponse response = registrationService.register(registrationRequest);
 
         assertEquals("token", response.accessToken());
-        verify(userRepositoryService).save(user);
+        verify(userCrudService).createUser(user);
     }
 
     @Test
@@ -79,7 +83,7 @@ class DefaultRegistrationServiceTest {
         User user = new User("test@example.com", "raw-password");
 
         when(userAuthenticationMapper.mapToUser(registrationRequest)).thenReturn(user);
-        when(userRepositoryService.findByEmail("test@example.com")).thenReturn(Optional.of(user));
+        when(userRepositoryService.isUserAlreadyExist(user)).thenReturn(true);
 
         assertThrows(UserIsAlreadyExist.class, () -> registrationService.register(registrationRequest));
         verify(userRepositoryService, never()).save(any());
