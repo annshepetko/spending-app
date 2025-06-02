@@ -22,12 +22,16 @@ public class UserRepositoryService {
                 .orElseThrow(() -> new UserIsNotRegisteredException("User is not registered yet"));
     }
 
+    public boolean isUserAlreadyExist(User user) {
+        return findByEmail(user.getEmail()).isPresent();
+    }
+
     public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
-    public void save(User user) {
-        this.userRepository.save(user);
-    }
 
+    public void save(User user) {
+        userRepository.save(user);
+    }
 }

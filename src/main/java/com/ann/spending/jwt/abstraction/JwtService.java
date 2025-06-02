@@ -8,4 +8,6 @@ public interface JwtService {
     Claims extractAllClaims(String token);
 
     boolean isTokenExpired(String token);
+
+    boolean isTokenValid(String token);
 }

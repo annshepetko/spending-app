@@ -9,6 +9,8 @@ import com.ann.spending.authorization.service.interfaces.RegistrationService;
 import com.ann.spending.authorization.service.repository.UserRepositoryService;
 import com.ann.spending.category.service.CategoryDaoService;
 import com.ann.spending.exception.user.UserIsAlreadyExist;
+import com.ann.spending.user.UserCrudService;
+import com.ann.spending.user.service.validator.PasswordEncodeManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,23 +18,26 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class DefaultRegistrationService implements RegistrationService {
 
-    private final UserRepositoryService userRepositoryService;
     private final UserAuthenticationMapper userAuthenticationMapper;
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncodeManager passwordEncoder;
     private final AuthenticationResponseBuilder authResponseBuilder;
     private final CategoryDaoService categoryService;
+    private final UserCrudService userCrudService;
+    private final UserRepositoryService userRepositoryService;
 
     public DefaultRegistrationService(
-            UserRepositoryService userRepositoryService,
             UserAuthenticationMapper userAuthenticationMapper,
-            PasswordEncoder passwordEncoder,
+            PasswordEncodeManager passwordEncoder,
             AuthenticationResponseBuilder authResponseBuilder,
-            CategoryDaoService categoryService ) {
+            CategoryDaoService categoryService,
+            UserCrudService userCrudService,
+            UserRepositoryService userRepositoryService) {
         this.authResponseBuilder = authResponseBuilder;
         this.passwordEncoder = passwordEncoder;
-        this.userRepositoryService = userRepositoryService;
         this.userAuthenticationMapper = userAuthenticationMapper;
         this.categoryService = categoryService;
+        this.userCrudService = userCrudService;
+        this.userRepositoryService = userRepositoryService;
     }
 
     @Override
@@ -44,19 +49,23 @@ public class DefaultRegistrationService implements RegistrationService {
         if (isUserAlreadyExist(user)) {
             throw new UserIsAlreadyExist("You are already registered");
         }
-        userRepositoryService.save(user);
 
+        userCrudService.createUser(user);
         return authResponseBuilder.buildResponse(user);
     }
 
-    private boolean isUserAlreadyExist(User user) {
-        return userRepositoryService.findByEmail(user.getEmail()).isPresent();
-    }
-
     private User createUserFromRegistrationRequest(RegistrationRequest registrationRequest) {
+
         User user = userAuthenticationMapper.mapToUser(registrationRequest);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encodeString(user.getPassword()));
         user.setCategories(categoryService.findGeneralCategories(user));
+
         return user;
     }
+
+    private boolean isUserAlreadyExist(User user) {
+        return userRepositoryService.isUserAlreadyExist(user);
+    }
+
+
 }

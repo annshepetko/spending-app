@@ -12,7 +12,7 @@ import com.ann.spending.data.SpendingDataFactory;
 import com.ann.spending.spending.SpendingRepository;
 import com.ann.spending.spending.dto.CreateSpendingBody;
 import com.ann.spending.spending.entity.Spending;
-import com.ann.spending.spending.service.SpendingService;
+import com.ann.spending.spending.service.SpendingCrudServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 
 @SpringBootTest(classes = TestBeans.class)
 @Transactional
-class SpendingServiceTest {
+class SpendingCrudServiceImplTest {
 
     @Autowired
     UserCategoryRepository userCategoryRepository;
@@ -37,7 +37,7 @@ class SpendingServiceTest {
     CategoryRepository categoryRepository;
 
     @Autowired
-    SpendingService spendingService;
+    SpendingCrudServiceImpl spendingService;
 
     @Autowired
     SpendingRepository spendingRepository;

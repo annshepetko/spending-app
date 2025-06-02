@@ -1,28 +1,24 @@
 package com.ann.spending.spending.service;
 
-import com.ann.spending.authorization.entity.User;
 import com.ann.spending.category.entity.Category;
 import com.ann.spending.spending.dto.SpendingDTO;
 import com.ann.spending.spending.entity.Spending;
 import com.ann.spending.spending.dto.CreateSpendingBody;
 import com.ann.spending.spending.interfaces.SpendingCrudService;
 import com.ann.spending.spending.interfaces.SpendingDaoService;
-import com.ann.spending.spending.interfaces.SpendingPageService;
 import com.ann.spending.spending.mapper.SpendingMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Service
-public class SpendingService implements SpendingCrudService {
+public class SpendingCrudServiceImpl implements SpendingCrudService {
 
     private final SpendingDaoService spendingDaoService;
     private final SpendingMapper spendingMapper;
 
-    public SpendingService(
+    public SpendingCrudServiceImpl(
             SpendingDaoService spendingDaoService, SpendingMapper spendingMapper) {
         this.spendingDaoService = spendingDaoService;
         this.spendingMapper = spendingMapper;

@@ -5,7 +5,7 @@ import com.ann.spending.category.CategoryRepository;
 import com.ann.spending.category.UserCategoryRepository;
 import com.ann.spending.category.entity.Category;
 import com.ann.spending.category.entity.UserCategory;
-import com.ann.spending.category.mapper.CategoryMapper;
+import com.ann.spending.category.mapper.UserCategoryMapper;
 import com.ann.spending.category.view.CategoryDTO;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +15,14 @@ import java.util.List;
 @Service
 public class CategoryDaoService {
 
-    private final CategoryMapper categoryMapper;
     private final UserCategoryRepository userCategoryRepository;
     private final CategoryRepository categoryRepository;
+    private final UserCategoryMapper userCategoryMapper;
 
-    public CategoryDaoService(CategoryMapper categoryMapper, UserCategoryRepository userCategoryRepository, CategoryRepository categoryRepository) {
-        this.categoryMapper = categoryMapper;
+    public CategoryDaoService(UserCategoryRepository userCategoryRepository, CategoryRepository categoryRepository, UserCategoryMapper userCategoryMapper) {
         this.userCategoryRepository = userCategoryRepository;
         this.categoryRepository = categoryRepository;
+        this.userCategoryMapper = userCategoryMapper;
     }
 
     public List<UserCategory> findGeneralCategories(User user){
@@ -30,7 +30,7 @@ public class CategoryDaoService {
         List<String> categoryNames = Arrays.asList("Bills", "Transport", "Mobile", "Shopping", "Insurance", "Voucher", "Internet", "Electricity");
         List<Category> categories = categoryRepository.findCategoriesByNameIn(categoryNames);
 
-        return categoryMapper.buildUserCategories(categories, user);
+        return userCategoryMapper.buildUserCategories(categories, user);
     }
 
     public List<CategoryDTO> findUserCategories(User user){

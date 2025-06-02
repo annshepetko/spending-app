@@ -1,9 +1,6 @@
 package com.ann.spending.jwt.abstraction;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,6 +21,22 @@ public abstract class DefaultJwtManager implements JwtTokenGenerator, JwtService
     @Override
     public abstract String generateToken(Map<String, Object> credentials, UserDetails user);
 
+
+    @Override
+    public boolean isTokenValid(String token) {
+        try {
+            Jws<Claims> claims = Jwts.parser()
+                    .setSigningKey(secret.getBytes())
+                    .parseClaimsJws(token);
+
+            return true;
+        } catch (ExpiredJwtException | UnsupportedJwtException | MalformedJwtException | SignatureException |
+                 IllegalArgumentException e) {
+            System.out.println("Token expired");
+        }
+
+        return false;
+    }
 
     protected String buildToken(Map<String, Object> credentials, UserDetails user, long expiration) {
         return Jwts.builder()

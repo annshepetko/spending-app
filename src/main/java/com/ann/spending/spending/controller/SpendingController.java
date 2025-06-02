@@ -8,7 +8,7 @@ import com.ann.spending.spending.entity.Spending;
 import com.ann.spending.spending.interfaces.SpendingPageService;
 import com.ann.spending.spending.mapper.CreationSpendingMapper;
 import com.ann.spending.spending.mapper.SpendingMapper;
-import com.ann.spending.spending.service.SpendingService;
+import com.ann.spending.spending.service.SpendingCrudServiceImpl;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.*;
 public class SpendingController {
 
     private final CreationSpendingMapper creationMapping;
-    private final SpendingService spendingService;
+    private final SpendingCrudServiceImpl spendingService;
     private final SpendingMapper spendingMapper;
     private final SpendingPageService spendingPageService;
 
-    public SpendingController(CreationSpendingMapper creationMapping, SpendingService spendingService, SpendingMapper spendingMapper, SpendingPageService spendingPageService) {
+    public SpendingController(CreationSpendingMapper creationMapping, SpendingCrudServiceImpl spendingService, SpendingMapper spendingMapper, SpendingPageService spendingPageService) {
         this.creationMapping = creationMapping;
         this.spendingService = spendingService;
         this.spendingMapper = spendingMapper;

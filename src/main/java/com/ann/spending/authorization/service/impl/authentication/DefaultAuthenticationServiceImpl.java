@@ -35,6 +35,7 @@ public class DefaultAuthenticationServiceImpl implements AuthenticationService<A
     public AuthenticationResponse authenticate(AuthenticationRequest authenticationRequest) {
         Authentication authentication = authenticateUser(authenticationRequest);
         User user = userRepositoryService.findByEmailIfPresent(authentication.getName());
+
         return authResponseBuilder.buildResponse(user) ;
     }
 

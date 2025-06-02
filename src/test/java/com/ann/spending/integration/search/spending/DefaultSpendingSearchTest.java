@@ -8,6 +8,7 @@ import com.ann.spending.category.UserCategoryRepository;
 import com.ann.spending.category.entity.Category;
 import com.ann.spending.category.entity.UserCategory;
 import com.ann.spending.category.mapper.CategoryMapper;
+import com.ann.spending.category.mapper.UserCategoryMapper;
 import com.ann.spending.data.AuthDataFactory;
 import com.ann.spending.data.CategoryServiceDataFactory;
 import com.ann.spending.data.SpendingDataFactory;
@@ -35,7 +36,7 @@ public class DefaultSpendingSearchTest {
     UserCategoryRepository userCategoryRepository;
 
     @Autowired
-    CategoryMapper categoryMapper;
+    UserCategoryMapper categoryMapper;
 
     @Autowired
     UserRepository userRepository;
@@ -45,9 +46,6 @@ public class DefaultSpendingSearchTest {
 
     @Autowired
     DefaultSpendingSearchService searchService;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     User user;
 
